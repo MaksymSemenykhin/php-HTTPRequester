@@ -24,8 +24,8 @@ class HTTPRequester {
 		
 		if (defined('HTTPRVERBOSE') && HTTPRVERBOSE) {
 			curl_setopt($ch, CURLOPT_VERBOSE, true);
-			$verbose = fopen('./curl.log', 'w+');
-			curl_setopt($ch, CURLOPT_STDERR, $verbose);
+#			$verbose = fopen('./curl.log', 'w+');
+#			curl_setopt($ch, CURLOPT_STDERR, $verbose);
 		}		
 		
 	  	$response = curl_exec($ch);
