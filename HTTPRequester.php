@@ -14,7 +14,8 @@ class HTTPRequester {
 			$query = http_build_query($params);
 		}
         $ch    = curl_init();
-		
+	
+	curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);    
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);		
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
@@ -40,20 +41,17 @@ class HTTPRequester {
      * @param       array $params
      * @return      HTTP-Response body or an empty string if the request fails or is empty
      */
-    public static function HTTPput($url, array $params = [], array $headers = []) {
-		if(in_array('Content-Type: application/json',$headers)){
-			$query = json_encode($params);    
-		}else{
-			$query = http_build_query($params);
-		}
+    public static function HTTPput($url, $params, array $headers = []) {
+
         $ch    = curl_init();
 		
+	curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);    
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);		
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_PUT, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $query);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 		
 		if (defined('HTTPRVERBOSE') && HTTPRVERBOSE) {
 			curl_setopt($ch, CURLOPT_VERBOSE, true);
